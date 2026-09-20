@@ -1,0 +1,461 @@
+.chess-game {
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  text-align: center;
+}
+
+.game-status {
+  margin-bottom: 15px;
+}
+
+.game-setting {
+  margin-top: 10px;
+}
+
+.board-wrapper {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+
+  margin: 25px auto;
+
+  perspective: 1000px;
+}
+
+.rank-labels {
+  width: 24px;
+  height: 480px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.board-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chess-board {
+  position: relative;
+  width: 480px;
+  height: 480px;
+
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+
+  border: 4px solid #252424;
+  transition: transform 0.4s ease;
+  transform-style: preserve-3d;
+}
+
+
+.chess-board.flipping {
+  animation: board-flip 0.6s ease;
+}
+
+@keyframes board-flip {
+  0% {
+    transform: rotateY(0deg);
+  }
+
+  50% {
+    transform: rotateY(90deg);
+  }
+
+  100% {
+    transform: rotateY(180deg);
+  }
+}
+
+/* Chess squares */
+
+.square {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+  margin: 0;
+
+  border: none;
+
+  cursor: pointer;
+  overflow: visible;
+}
+
+.square.light {
+  background-color: #e8e4db;
+}
+
+.square.dark {
+  background-color: #1f1f1e;
+}
+
+/* Selected square — only show corner brackets */
+.square.selected {
+  position: relative;
+}
+
+/* Selected-square corner indicator */
+.selected-corners {
+  position: absolute;
+
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Light square → rich navy blue */
+.square.light.selected .selected-corners {
+  background:
+
+    /* Top-left */
+    linear-gradient(#061a4b, #061a4b)
+    left top / 13px 3px no-repeat,
+
+    linear-gradient(#061a4b, #061a4b)
+    left top / 3px 13px no-repeat,
+
+    /* Top-right */
+    linear-gradient(#061a4b, #061a4b)
+    right top / 13px 3px no-repeat,
+
+    linear-gradient(#061a4b, #061a4b)
+    right top / 3px 13px no-repeat,
+
+    /* Bottom-left */
+    linear-gradient(#061a4b, #061a4b)
+    left bottom / 13px 3px no-repeat,
+
+    linear-gradient(#061a4b, #061a4b)
+    left bottom / 3px 13px no-repeat,
+
+    /* Bottom-right */
+    linear-gradient(#061a4b, #061a4b)
+    right bottom / 13px 3px no-repeat,
+
+    linear-gradient(#061a4b, #061a4b)
+    right bottom / 3px 13px no-repeat;
+}
+
+/* Dark square → same lighter cobalt blue */
+.square.dark.selected .selected-corners {
+  background:
+
+    /* Top-left */
+    linear-gradient(#83aaee, #6FA3FF)
+    left top / 13px 3px no-repeat,
+
+    linear-gradient(#6FA3FF, #6FA3FF)
+    left top / 3px 13px no-repeat,
+
+    /* Top-right */
+    linear-gradient(#6FA3FF, #6FA3FF)
+    right top / 13px 3px no-repeat,
+
+    linear-gradient(#6FA3FF, #6FA3FF)
+    right top / 3px 13px no-repeat,
+
+    /* Bottom-left */
+    linear-gradient(#6FA3FF, #6FA3FF)
+    left bottom / 13px 3px no-repeat,
+
+    linear-gradient(#6FA3FF, #6FA3FF)
+    left bottom / 3px 13px no-repeat,
+
+    /* Bottom-right */
+    linear-gradient(#6FA3FF, #6FA3FF)
+    right bottom / 13px 3px no-repeat,
+
+    linear-gradient(#6FA3FF, #6FA3FF)
+    right bottom / 3px 13px no-repeat;
+}
+.square.legal-move {
+  position: relative;
+  box-shadow: none;
+}
+
+/* Light square → white hexagon with black outline */
+.square.light.legal-move::after {
+  content: "";
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 15px;
+  height: 15px;
+
+  transform: translate(-50%, -50%);
+
+  background: #252424;
+
+  clip-path: polygon(
+    50% 0%,
+    93% 25%,
+    93% 75%,
+    50% 100%,
+    7% 75%,
+    7% 25%
+  );
+
+  pointer-events: none;
+  z-index: 5;
+}
+
+.square.light.legal-move::before {
+  content: "";
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 11px;
+  height: 11px;
+
+  transform: translate(-50%, -50%);
+
+  background: #f4f4f0;
+
+  clip-path: polygon(
+    50% 0%,
+    93% 25%,
+    93% 75%,
+    50% 100%,
+    7% 75%,
+    7% 25%
+  );
+
+  pointer-events: none;
+  z-index: 6;
+}
+
+
+/* Dark square → black hexagon with white outline */
+.square.dark.legal-move::after {
+  content: "";
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 15px;
+  height: 15px;
+
+  transform: translate(-50%, -50%);
+
+  background: #f4f4f0;
+
+  clip-path: polygon(
+    50% 0%,
+    93% 25%,
+    93% 75%,
+    50% 100%,
+    7% 75%,
+    7% 25%
+  );
+
+  pointer-events: none;
+  z-index: 5;
+}
+
+.square.dark.legal-move::before {
+  content: "";
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 11px;
+  height: 11px;
+
+  transform: translate(-50%, -50%);
+
+  background: #252424;
+
+  clip-path: polygon(
+    50% 0%,
+    93% 25%,
+    93% 75%,
+    50% 100%,
+    7% 75%,
+    7% 25%
+  );
+
+  pointer-events: none;
+  z-index: 6;
+}
+
+
+
+/* Chess pieces */
+
+.chess-piece-svg {
+  display: block;
+
+  width: 82%;
+  height: 82%;
+
+  overflow: visible;
+  pointer-events: none;
+
+  transition: transform 0.15s ease;
+}
+
+/* White pieces */
+
+.white-piece {
+  filter:
+    drop-shadow(0 2px 2px rgba(0, 0, 0, 0.35))
+    drop-shadow(0 5px 6px rgba(0, 0, 0, 0.18));
+}
+
+/* Black pieces */
+
+.black-piece {
+  filter:
+    drop-shadow(0 2px 2px rgba(0, 0, 0, 0.5))
+    drop-shadow(0 5px 7px rgba(0, 0, 0, 0.25));
+}
+
+.square:hover .chess-piece-svg {
+  transform: scale(1.04);
+}
+
+/*
+  Temporarily hides the destination piece
+  while the moving piece animation is playing.
+*/
+
+.square.animation-destination {
+  color: transparent;
+}
+
+/* Moving piece animation */
+
+.moving-piece-layer {
+  position: absolute;
+
+  top: 4px;
+  right: 4px;
+  bottom: 4px;
+  left: 4px;
+
+  display: grid;
+
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+
+  pointer-events: none;
+  z-index: 20;
+}
+
+.moving-piece-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  animation: piece-move 350ms ease-in-out forwards;
+}
+
+.moving-piece-overlay .chess-piece-svg {
+  width: 82%;
+  height: 82%;
+  margin: 0;
+}
+
+@keyframes piece-move {
+  from {
+    transform: translate(0, 0);
+  }
+
+  to {
+    transform:
+      translate(
+        calc(var(--move-x) * 100%),
+        calc(var(--move-y) * 100%)
+      );
+  }
+}
+
+/* File labels */
+
+.file-labels {
+  width: 480px;
+
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+
+  padding-top: 4px;
+
+  text-align: center;
+
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Move history */
+
+.move-history {
+  width: 480px;
+
+  margin: 10px auto 30px;
+
+  text-align: center;
+}
+
+.move-history ol {
+  display: inline-block;
+  text-align: left;
+}
+
+/* Promotion */
+
+.promotion-menu {
+  margin-top: 15px;
+
+  text-align: center;
+}
+
+.promotion-options {
+  display: flex;
+  justify-content: center;
+
+  gap: 10px;
+}
+
+.promotion-options button {
+  width: 65px;
+  height: 65px;
+
+  padding: 5px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+}
+
+.promotion-options .chess-piece-svg {
+  width: 90%;
+  height: 90%;
+}
