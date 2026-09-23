@@ -98,11 +98,11 @@
 }
 
 .square.light {
-  background-color: #cfe6df;
+  background-color: #c7cdea;
 }
 
 .square.dark {
-  background-color: #16272c;
+  background-color: #4b585e;
 }
 
 /* Selected square — only show corner brackets */
