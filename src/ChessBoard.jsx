@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 
 import {
@@ -33,418 +34,68 @@ import {
   endGameState,
 } from "./gameState";
 
+import blackKing from "./assets/pieces/blackKing.png";
+import blackQueen from "./assets/pieces/blackQueen.png";
+import blackRook from "./assets/pieces/blackRook.png";
+import blackBishop from "./assets/pieces/blackBishop.png";
+import blackKnight from "./assets/pieces/blackKnight.png";
+import blackPawn from "./assets/pieces/blackPawn.png";
+
 import "./ChessBoard.css";
 
 
 /*
   --------------------------------------------------
-  CHESS PIECE RENDERING
+  CUSTOM CHESS PIECE RENDERING
   --------------------------------------------------
 
-  Custom inline SVG pieces are used instead of
-  Unicode chess characters.
+  Black pieces currently use custom PNG assets.
 
-  This makes the appearance independent of the
-  operating system and installed fonts.
+  White pieces are temporarily hidden while
+  the black piece set is being tested.
 */
+
+
+const blackPieceMap = {
+  k: blackKing,
+  q: blackQueen,
+  r: blackRook,
+  b: blackBishop,
+  n: blackKnight,
+  p: blackPawn,
+};
+
 
 function ChessPiece({ color, type }) {
 
-  const isWhite =
-    color === "w";
-
-  const fill =
-    isWhite
-      ? "#f4f4f0"
-      : "#17191d";
-
-  const stroke =
-    isWhite
-      ? "#17191d"
-      : "#d9d9d4";
-
-  const commonProps = {
-    viewBox: "0 0 100 100",
-
-    className:
-      `chess-piece-svg ${
-        isWhite
-          ? "white-piece"
-          : "black-piece"
-      }`,
-
-    "aria-hidden": true,
-  };
-
-
   /*
-    PAWN
+    Black pieces use the custom PNG artwork.
   */
 
-  if (type === "p") {
-
-    return (
-
-      <svg {...commonProps}>
-
-        <circle
-          cx="50"
-          cy="25"
-          r="13"
-          fill={fill}
-          stroke={stroke}
-          strokeWidth="3"
-        />
-
-        <path
-          d="
-            M40 37
-            L60 37
-            L63 62
-            L72 73
-            L72 80
-            L28 80
-            L28 73
-            L37 62
-            Z
-          "
-          fill={fill}
-          stroke={stroke}
-          strokeWidth="3"
-          strokeLinejoin="round"
-        />
-
-        <path
-          d="M34 80 L66 80"
-          fill="none"
-          stroke={stroke}
-          strokeWidth="5"
-          strokeLinecap="round"
-        />
-
-      </svg>
-
-    );
+  if (color !== "b") {
+    return null;
   }
 
 
-  /*
-    ROOK
-  */
+  const pieceImage =
+    blackPieceMap[type];
 
-  if (type === "r") {
 
-    return (
-
-      <svg {...commonProps}>
-
-        <path
-          d="
-            M28 22
-            L39 22
-            L39 30
-            L46 30
-            L46 22
-            L54 22
-            L54 30
-            L61 30
-            L61 22
-            L72 22
-            L69 39
-            L64 44
-            L64 69
-            L74 77
-            L74 82
-            L26 82
-            L26 77
-            L36 69
-            L36 44
-            L31 39
-            Z
-          "
-          fill={fill}
-          stroke={stroke}
-          strokeWidth="3"
-          strokeLinejoin="round"
-        />
-
-        <path
-          d="M24 82 L76 82"
-          fill="none"
-          stroke={stroke}
-          strokeWidth="5"
-          strokeLinecap="round"
-        />
-
-      </svg>
-
-    );
+  if (!pieceImage) {
+    return null;
   }
 
 
-  /*
-    KNIGHT
-  */
+  return (
 
-  if (type === "n") {
+    <img
+      src={pieceImage}
+      className="chess-piece-image"
+      alt=""
+      draggable="false"
+    />
 
-    return (
-
-      <svg {...commonProps}>
-
-        <path
-          d="
-            M30 80
-            L30 70
-            C34 65 37 58 38 51
-            C39 42 34 34 38 25
-            C44 30 51 33 57 32
-            C66 30 70 37 68 44
-            C66 50 59 54 53 57
-            C60 60 67 66 70 72
-            L74 80
-            Z
-          "
-          fill={fill}
-          stroke={stroke}
-          strokeWidth="3"
-          strokeLinejoin="round"
-        />
-
-        <circle
-          cx="55"
-          cy="40"
-          r="3"
-          fill={stroke}
-        />
-
-        <path
-          d="M27 80 L73 80"
-          fill="none"
-          stroke={stroke}
-          strokeWidth="5"
-          strokeLinecap="round"
-        />
-
-      </svg>
-
-    );
-  }
-
-
-  /*
-    BISHOP
-  */
-
-  if (type === "b") {
-
-    return (
-
-      <svg {...commonProps}>
-
-        <path
-          d="
-            M50 18
-            C40 25 36 35 40 44
-            C43 51 40 57 35 64
-            L29 72
-            L29 78
-            L71 78
-            L71 72
-            L65 64
-            C60 57 57 51 60 44
-            C64 35 60 25 50 18
-            Z
-          "
-          fill={fill}
-          stroke={stroke}
-          strokeWidth="3"
-          strokeLinejoin="round"
-        />
-
-        <path
-          d="M44 27 L56 39"
-          fill="none"
-          stroke={stroke}
-          strokeWidth="4"
-          strokeLinecap="round"
-        />
-
-        <path
-          d="M27 80 L73 80"
-          fill="none"
-          stroke={stroke}
-          strokeWidth="5"
-          strokeLinecap="round"
-        />
-
-      </svg>
-
-    );
-  }
-
-
-  /*
-    QUEEN
-  */
-
-  if (type === "q") {
-
-    return (
-
-      <svg {...commonProps}>
-
-        <path
-          d="
-            M27 30
-            L35 48
-            L43 30
-            L50 48
-            L57 30
-            L65 48
-            L73 30
-            L67 67
-            L72 76
-            L72 81
-            L28 81
-            L28 76
-            L33 67
-            Z
-          "
-          fill={fill}
-          stroke={stroke}
-          strokeWidth="3"
-          strokeLinejoin="round"
-        />
-
-        <circle
-          cx="27"
-          cy="27"
-          r="5"
-          fill={fill}
-          stroke={stroke}
-          strokeWidth="3"
-        />
-
-        <circle
-          cx="43"
-          cy="25"
-          r="5"
-          fill={fill}
-          stroke={stroke}
-          strokeWidth="3"
-        />
-
-        <circle
-          cx="50"
-          cy="27"
-          r="5"
-          fill={fill}
-          stroke={stroke}
-          strokeWidth="3"
-        />
-
-        <circle
-          cx="57"
-          cy="25"
-          r="5"
-          fill={fill}
-          stroke={stroke}
-          strokeWidth="3"
-        />
-
-        <circle
-          cx="73"
-          cy="27"
-          r="5"
-          fill={fill}
-          stroke={stroke}
-          strokeWidth="3"
-        />
-
-        <path
-          d="M25 82 L75 82"
-          fill="none"
-          stroke={stroke}
-          strokeWidth="5"
-          strokeLinecap="round"
-        />
-
-      </svg>
-
-    );
-  }
-
-
-  /*
-    KING
-  */
-
-  if (type === "k") {
-
-    return (
-
-      <svg {...commonProps}>
-
-        <path
-          d="
-            M43 18
-            L43 29
-            L32 29
-            L32 37
-            L43 37
-            L43 45
-            C43 51 38 56 35 62
-            L28 73
-            L28 80
-            L72 80
-            L72 73
-            L65 62
-            C62 56 57 51 57 45
-            L57 37
-            L68 37
-            L68 29
-            L57 29
-            L57 18
-            Z
-          "
-          fill={fill}
-          stroke={stroke}
-          strokeWidth="3"
-          strokeLinejoin="round"
-        />
-
-        <path
-          d="M50 10 L50 29"
-          fill="none"
-          stroke={stroke}
-          strokeWidth="5"
-          strokeLinecap="round"
-        />
-
-        <path
-          d="M41 19 L59 19"
-          fill="none"
-          stroke={stroke}
-          strokeWidth="5"
-          strokeLinecap="round"
-        />
-
-        <path
-          d="M25 82 L75 82"
-          fill="none"
-          stroke={stroke}
-          strokeWidth="5"
-          strokeLinecap="round"
-        />
-
-      </svg>
-
-    );
-  }
-
-
-  return null;
+  );
 }
 
 
@@ -452,9 +103,18 @@ const MOVE_ANIMATION_TIME = 350;
 
 
 function wait(milliseconds) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, milliseconds);
-  });
+
+  return new Promise(
+    (resolve) => {
+
+      setTimeout(
+        resolve,
+        milliseconds
+      );
+
+    }
+  );
+
 }
 
 
@@ -550,8 +210,7 @@ function ChessBoard() {
 
 
   /*
-    Central CHECKMATE PROTOCOL
-    game state.
+    Central game state.
   */
 
   const [gameState, setGameState] =
@@ -1994,11 +1653,6 @@ function ChessBoard() {
 
                         {/*
                           Selected square indicator.
-
-                          This is a real child element
-                          rather than a pseudo-element,
-                          so it does not interfere with
-                          the legal-move hexagon system.
                         */}
 
                         {isSelected && (
@@ -2028,8 +1682,11 @@ function ChessBoard() {
                       </button>
 
                     );
+
                   }
+
                 )
+
             )}
 
 
@@ -2242,6 +1899,7 @@ function ChessBoard() {
     </div>
 
   );
+
 }
 
 

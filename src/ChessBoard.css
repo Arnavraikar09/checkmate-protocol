@@ -459,3 +459,13 @@
   width: 90%;
   height: 90%;
 }
+
+.chess-piece-image {
+  width: 82%;
+  height: 82%;
+  object-fit: contain;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
