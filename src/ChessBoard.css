@@ -470,8 +470,8 @@
   pointer-events: none;
 
   filter:
-  drop-shadow(0 0 1px rgba(0, 0, 0, 0.85))
-  drop-shadow(0 0 2px rgba(0, 0, 0, 0.75));
+  drop-shadow(0 0 1px rgba(0, 0, 0, 0.65))
+  drop-shadow(0 0 2px rgba(0, 0, 0, 0.45));
 }
 
 .chess-piece-k {
@@ -489,7 +489,7 @@
 .chess-piece-p {
   width: 91%;
   height: 91%;
-  transform: translateY(1.5px);
+  transform: translateY(-0.1px);
 }
 
 .chess-piece-b {
