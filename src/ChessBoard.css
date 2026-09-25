@@ -461,8 +461,8 @@
 }
 
 .chess-piece-image {
-  width: 82%;
-  height: 82%;
+  width: 90%;
+  height: 90%;
   object-fit: contain;
   display: block;
   user-select: none;
