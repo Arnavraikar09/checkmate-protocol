@@ -98,11 +98,11 @@
 }
 
 .square.light {
-  background-color: #c7cdea;
+  background-color: #D9D6CE;
 }
 
 .square.dark {
-  background-color: #4b585e;
+  background-color: #484B4D;
 }
 
 /* Selected square — only show corner brackets */
@@ -468,4 +468,8 @@
   user-select: none;
   -webkit-user-drag: none;
   pointer-events: none;
+
+  filter:
+    drop-shadow(0 0 2px rgba(0, 0, 0, 0.65))
+    drop-shadow(0 0 4px rgba(0, 0, 0, 0.45));
 }
