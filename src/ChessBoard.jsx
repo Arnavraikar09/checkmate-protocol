@@ -67,34 +67,23 @@ const blackPieceMap = {
 
 
 function ChessPiece({ color, type }) {
-
-  /*
-    Black pieces use the custom PNG artwork.
-  */
-
   if (color !== "b") {
     return null;
   }
 
-
-  const pieceImage =
-    blackPieceMap[type];
-
+  const pieceImage = blackPieceMap[type];
 
   if (!pieceImage) {
     return null;
   }
 
-
   return (
-
     <img
       src={pieceImage}
-      className="chess-piece-image"
+      className={`chess-piece-image chess-piece-${type}`}
       alt=""
       draggable="false"
     />
-
   );
 }
 

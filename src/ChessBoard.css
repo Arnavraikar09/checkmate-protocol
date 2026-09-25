@@ -456,13 +456,13 @@
 }
 
 .promotion-options .chess-piece-svg {
-  width: 90%;
-  height: 90%;
+  width: 93%;
+  height: 93%;
 }
 
 .chess-piece-image {
-  width: 90%;
-  height: 90%;
+  width: 92%;
+  height: 92%;
   object-fit: contain;
   display: block;
   user-select: none;
@@ -470,6 +470,24 @@
   pointer-events: none;
 
   filter:
-    drop-shadow(0 0 2px rgba(0, 0, 0, 0.65))
-    drop-shadow(0 0 4px rgba(0, 0, 0, 0.45));
+  drop-shadow(0 0 1px rgba(0, 0, 0, 0.95))
+  drop-shadow(0 0 2px rgba(0, 0, 0, 0.85));
+}
+
+.chess-piece-k {
+  width: 97%;
+  height: 97%;
+  transform: translateY(-1.5px);
+}
+
+.chess-piece-r {
+  width: 85%;
+  height: 85%;
+  transform: translateY(1.5px);
+}
+
+.chess-piece-p {
+  width: 86%;
+  height: 86%;
+  transform: translateY(1.5px);
 }
