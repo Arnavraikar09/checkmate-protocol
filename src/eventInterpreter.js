@@ -715,8 +715,7 @@ export function interpretEvents(
 
     interpretation.playerImpact =
       "neutral";
-
-    interpretation.triggers.push(
+     interpretation.triggers.push(
       "normal_move"
     );
 
