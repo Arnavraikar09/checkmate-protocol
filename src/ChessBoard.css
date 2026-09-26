@@ -128,11 +128,11 @@
 }
 
 .square.light {
-  background-color: #D9D6CE;
+  background-color: #d6dbdf;
 }
 
 .square.dark {
-  background-color: #484B4D;
+  background-color: #656a75;
 }
 
 
@@ -181,37 +181,35 @@
 .chess-piece-k {
   width: 100%;
   height: 100%;
-
-  transform: translateY(-1.5px);
+  transform: translateY(-1.5px) scale(1.05);
 }
 
 .chess-piece-q {
   width: 100%;
   height: 100%;
-
-  transform: translateY(-1.5px);
+  transform: translateY(-1.5px) scale(1.05);
 }
 
 .chess-piece-r {
-  width: 93%;
-  height: 93%;
+  width: 100%;
+  height: 100%;
 
   transform: translateY(-1px);
 }
 
 .chess-piece-b {
-  width: 97%;
-  height: 97%;
+  width: 100%;
+  height: 100%;
 }
 
 .chess-piece-n {
-  width: 92%;
-  height: 92%;
+  width: 100%;
+  height: 100%;
 }
 
 .chess-piece-p {
-  width: 93%;
-  height: 93%;
+  width: 100%;
+  height: 100%;
 
   transform: translateY(-1px);
 }
