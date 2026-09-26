@@ -72,6 +72,7 @@
   height: 600px;
 
   display: grid;
+
   grid-template-columns: repeat(8, 1fr);
   grid-template-rows: repeat(8, 1fr);
 
@@ -91,6 +92,7 @@
 }
 
 @keyframes board-flip {
+
   0% {
     transform: rotateY(0deg);
   }
@@ -102,6 +104,7 @@
   100% {
     transform: rotateY(180deg);
   }
+
 }
 
 
@@ -393,6 +396,7 @@
 }
 
 @keyframes piece-move {
+
   from {
     transform: translate(0, 0);
   }
@@ -404,6 +408,7 @@
         calc(var(--move-y) * 100%)
       );
   }
+
 }
 
 
@@ -413,6 +418,7 @@
   width: 600px;
 
   display: grid;
+
   grid-template-columns: repeat(8, 1fr);
 
   padding-top: 8px;
@@ -423,6 +429,7 @@
 
   font-size: 12px;
   font-weight: 500;
+
   letter-spacing: 0.04em;
 
   user-select: none;

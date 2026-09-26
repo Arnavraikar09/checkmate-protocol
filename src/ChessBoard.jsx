@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 
 import {
@@ -41,6 +40,13 @@ import blackBishop from "./assets/pieces/blackBishop.png";
 import blackKnight from "./assets/pieces/blackKnight.png";
 import blackPawn from "./assets/pieces/blackPawn.png";
 
+import whiteKing from "./assets/pieces/whiteKing.png";
+import whiteQueen from "./assets/pieces/whiteQueen.png";
+import whiteRook from "./assets/pieces/whiteRook.png";
+import whiteBishop from "./assets/pieces/whiteBishop.png";
+import whiteKnight from "./assets/pieces/whiteKnight.png";
+import whitePawn from "./assets/pieces/whitePawn.png";
+
 import "./ChessBoard.css";
 
 
@@ -48,13 +54,7 @@ import "./ChessBoard.css";
   --------------------------------------------------
   CUSTOM CHESS PIECE RENDERING
   --------------------------------------------------
-
-  Black pieces currently use custom PNG assets.
-
-  White pieces are temporarily hidden while
-  the black piece set is being tested.
 */
-
 
 const blackPieceMap = {
   k: blackKing,
@@ -66,16 +66,32 @@ const blackPieceMap = {
 };
 
 
-function ChessPiece({ color, type }) {
-  if (color !== "b") {
-    return null;
-  }
+const whitePieceMap = {
+  k: whiteKing,
+  q: whiteQueen,
+  r: whiteRook,
+  b: whiteBishop,
+  n: whiteKnight,
+  p: whitePawn,
+};
 
-  const pieceImage = blackPieceMap[type];
+
+function ChessPiece({ color, type }) {
+
+  const pieceMap =
+    color === "w"
+      ? whitePieceMap
+      : blackPieceMap;
+
+
+  const pieceImage =
+    pieceMap[type];
+
 
   if (!pieceImage) {
     return null;
   }
+
 
   return (
     <img
@@ -478,22 +494,6 @@ function ChessBoard() {
 
   /*
     Main move processing pipeline.
-
-    Chess move
-        ↓
-    Event analysis
-        ↓
-    Material analysis
-        ↓
-    Position analysis
-        ↓
-    Performance analysis
-        ↓
-    Event interpretation
-        ↓
-    Match history
-        ↓
-    Central game state
   */
 
   async function processMoveAnalysis(
@@ -1639,10 +1639,6 @@ function ChessBoard() {
                           )
                         }
                       >
-
-                        {/*
-                          Selected square indicator.
-                        */}
 
                         {isSelected && (
 
