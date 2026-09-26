@@ -105,6 +105,7 @@ function ChessPiece({ color, type }) {
 
 
 const MOVE_ANIMATION_TIME = 350;
+const AI_MOVE_ANIMATION_TIME = 450;
 
 
 function wait(milliseconds) {
@@ -373,7 +374,8 @@ function ChessBoard() {
   function startMoveAnimation(
     from,
     to,
-    piece
+    piece,
+    isAiMove = false
   ) {
 
     const fromPosition =
@@ -404,6 +406,8 @@ function ChessBoard() {
 
       rowDifference,
       colDifference,
+
+      isAiMove,
 
     });
   }
@@ -823,7 +827,8 @@ function ChessBoard() {
         startMoveAnimation(
           from,
           to,
-          movedPiece
+          movedPiece,
+          true
         );
 
 
@@ -833,7 +838,7 @@ function ChessBoard() {
 
 
         await wait(
-          MOVE_ANIMATION_TIME
+          AI_MOVE_ANIMATION_TIME
         );
 
 
@@ -1681,7 +1686,11 @@ function ChessBoard() {
 
                 <div
 
-                  className="moving-piece-overlay"
+                  className={`moving-piece-overlay ${
+                    animatedMove.isAiMove
+                      ? "ai-move"
+                      : ""
+                  }`}
 
                   style={{
 
